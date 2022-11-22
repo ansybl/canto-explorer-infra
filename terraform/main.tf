@@ -13,6 +13,13 @@ provider "google" {
   zone        = var.zone
 }
 
+provider "google-beta" {
+  project     = var.project
+  credentials = file(var.credentials)
+  region      = var.region
+  zone        = var.zone
+}
+
 resource "google_storage_bucket" "default" {
   name          = "canto-explorer-infra-bucket-tfstate"
   force_destroy = false
@@ -34,6 +41,7 @@ resource "google_project_service" "sqladmin" {
 resource "google_cloud_run_service" "default" {
   name     = "${local.service_name}-run-service-${local.environment}"
   location = var.region
+  provider = google-beta
 
   template {
     spec {
@@ -44,8 +52,20 @@ resource "google_cloud_run_service" "default" {
           "-c",
           "bin/blockscout eval 'Elixir.Explorer.ReleaseTasks.create_and_migrate()' && bin/blockscout start"
         ]
+        resources {
+          limits = {
+            cpu    = "4000m"
+            memory = "8192Mi"
+          }
+        }
         ports {
           container_port = 4000
+        }
+        startup_probe {
+          initial_delay_seconds = 60
+          tcp_socket {
+            port = 4000
+          }
         }
 
         env {
@@ -54,7 +74,7 @@ resource "google_cloud_run_service" "default" {
         }
         env {
           name  = "ETHEREUM_JSONRPC_HTTP_URL"
-          value = "http://rpc1.canto.ansybl.io:8545/"
+          value = "https://canto-validator-nginx-reverse-proxy-node1-testnet-3mid33wd4a-uc.a.run.app/evm_rpc/"
         }
         env {
           # as in november 2022, the blockscout database URL parser crashes when using the unix socket url syntax
@@ -81,7 +101,7 @@ resource "google_cloud_run_service" "default" {
         }
         env {
           name  = "ETHEREUM_JSONRPC_TRACE_URL"
-          value = "http://rpc1.canto.ansybl.io:8545/"
+          value = "https://canto-validator-nginx-reverse-proxy-node1-testnet-3mid33wd4a-uc.a.run.app/evm_rpc/"
         }
         env {
           name  = "NETWORK"

@@ -20,7 +20,7 @@ resource "google_sql_database_instance" "default" {
   region           = var.region
 
   settings {
-    tier = "db-g1-small"
+    tier = "db-custom-2-4096"
 
     database_flags {
       name  = "max_connections"
