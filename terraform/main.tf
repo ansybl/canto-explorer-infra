@@ -74,7 +74,7 @@ resource "google_cloud_run_service" "default" {
         }
         env {
           name  = "ETHEREUM_JSONRPC_HTTP_URL"
-          value = "https://canto-validator-nginx-reverse-proxy-node1-testnet-3mid33wd4a-uc.a.run.app/evm_rpc/"
+          value = "https://canto-node1.ansybl.io/evm_rpc/"
         }
         env {
           # as in november 2022, the blockscout database URL parser crashes when using the unix socket url syntax
@@ -101,7 +101,7 @@ resource "google_cloud_run_service" "default" {
         }
         env {
           name  = "ETHEREUM_JSONRPC_TRACE_URL"
-          value = "https://canto-validator-nginx-reverse-proxy-node1-testnet-3mid33wd4a-uc.a.run.app/evm_rpc/"
+          value = "https://canto-node1.ansybl.io/evm_rpc/"
         }
         env {
           name  = "NETWORK"

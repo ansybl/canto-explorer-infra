@@ -37,6 +37,11 @@ variable "db_password" {
   default = ""
 }
 
+variable "create_load_balancer" {
+  type    = bool
+  default = false
+}
+
 locals {
   environment  = terraform.workspace
   service_name = "blockscout"
