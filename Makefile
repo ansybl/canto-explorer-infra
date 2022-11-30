@@ -66,3 +66,15 @@ devops/terraform/plan: devops/terraform/select/$(WORKSPACE)
 
 devops/terraform/apply: devops/terraform/select/$(WORKSPACE)
 	terraform -chdir=terraform apply -auto-approve
+
+devops/terraform/output: devops/terraform/select/$(WORKSPACE)
+	terraform -chdir=terraform output
+
+devops/terraform/redeploy: devops/terraform/select/$(WORKSPACE)
+	terraform -chdir=terraform destroy -target=google_cloud_run_service.default -auto-approve
+	make devops/terraform/apply
+
+# https://github.com/terraform-google-modules/terraform-google-lb-http/blob/v6.3.0/docs/upgrading-v2.0.0-v3.0.0.md#dealing-with-dependencies
+devops/terraform/destroy/serverless_neg: devops/terraform/select/$(WORKSPACE)
+	terraform -chdir=terraform destroy \
+	-target=google_compute_region_network_endpoint_group.serverless_neg -auto-approve

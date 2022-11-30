@@ -1,6 +1,6 @@
 # Canto Explorer Infra
 
-<https://blockscout-run-service-dev-3mid33wd4a-uc.a.run.app/>
+<https://testnet-canto-explorer.ansybl.io>
 
 Automates the [BlockScout](https://github.com/blockscout/blockscout) deployment to Goole Cloud Platform for Canto.
 
