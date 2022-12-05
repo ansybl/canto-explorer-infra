@@ -42,6 +42,10 @@ variable "create_load_balancer" {
   default = false
 }
 
+variable "ethereum_jsonrpc_http_url" {
+  type = string
+}
+
 locals {
   environment  = terraform.workspace
   service_name = "blockscout"

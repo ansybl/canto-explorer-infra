@@ -74,7 +74,7 @@ resource "google_cloud_run_service" "default" {
         }
         env {
           name  = "ETHEREUM_JSONRPC_HTTP_URL"
-          value = "https://canto-node1.ansybl.io/evm_rpc/"
+          value = var.ethereum_jsonrpc_http_url
         }
         env {
           # as in november 2022, the blockscout database URL parser crashes when using the unix socket url syntax
@@ -101,7 +101,7 @@ resource "google_cloud_run_service" "default" {
         }
         env {
           name  = "ETHEREUM_JSONRPC_TRACE_URL"
-          value = "https://canto-node1.ansybl.io/evm_rpc/"
+          value = var.ethereum_jsonrpc_http_url
         }
         env {
           name  = "NETWORK"
