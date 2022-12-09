@@ -7,6 +7,6 @@ region  = "us-central1"
 zone    = "us-central1-a"
 
 create_load_balancer = true
-prefix = "canto-explorer"
+prefix               = "canto-explorer"
 
 ethereum_jsonrpc_http_url = "https://canto-testnet.ansybl.io/evm_rpc/"
