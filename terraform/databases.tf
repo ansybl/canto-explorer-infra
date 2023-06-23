@@ -32,6 +32,12 @@ resource "google_sql_database_instance" "default" {
       record_client_address   = true
       record_application_tags = true
     }
+
+    user_labels = {
+      environment  = local.environment
+      service_name = local.service_name
+      prefix       = var.prefix
+    }
   }
 
   depends_on = [
