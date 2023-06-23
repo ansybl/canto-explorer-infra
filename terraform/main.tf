@@ -494,6 +494,9 @@ resource "google_cloud_run_service" "default" {
       }
 
       labels = {
+        # make that change explicit or Terraform keeps thinking we want to change to null
+        "run.googleapis.com/startupProbeType" = "Custom"
+
         environment  = local.environment
         service_name = local.service_name
         prefix       = var.prefix
@@ -527,4 +530,17 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
   service  = google_cloud_run_service.default.name
 
   policy_data = data.google_iam_policy.noauth.policy_data
+}
+
+resource "google_cloud_run_domain_mapping" "default" {
+  location = var.region
+  name     = local.domain_name
+
+  metadata {
+    namespace = var.project
+  }
+
+  spec {
+    route_name = google_cloud_run_service.default.name
+  }
 }

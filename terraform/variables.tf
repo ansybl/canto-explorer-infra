@@ -46,8 +46,30 @@ variable "ethereum_jsonrpc_http_url" {
   type = string
 }
 
+variable "create_cloudflare" {
+  type    = bool
+  default = false
+}
+
+variable "cloudflare_zone_id" {
+  type        = string
+  description = "The zone identifier"
+  default     = ""
+}
+
+variable "domain_prefix" {
+  type    = string
+  default = ""
+}
+
+variable "domain_suffix" {
+  type    = string
+  default = ""
+}
+
 locals {
   environment  = terraform.workspace
   service_name = "blockscout"
   image_name   = "${local.service_name}-${local.environment}"
+  domain_name  = "${var.domain_prefix}.${var.domain_suffix}"
 }
