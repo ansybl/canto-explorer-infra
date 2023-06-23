@@ -17,6 +17,11 @@ module "load_balancer" {
   name           = "${local.service_name}-load-balancer-${local.environment}"
   create_address = false
   address        = google_compute_global_address.load_balancer_address.address
+  labels = {
+    environment  = local.environment
+    service_name = local.service_name
+    prefix       = var.prefix
+  }
 
   backends = {
     default = {

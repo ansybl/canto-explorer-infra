@@ -492,6 +492,13 @@ resource "google_cloud_run_service" "default" {
       annotations = {
         "run.googleapis.com/cloudsql-instances" = google_sql_database_instance.default.connection_name
       }
+
+      labels = {
+        environment  = local.environment
+        service_name = local.service_name
+        prefix       = var.prefix
+      }
+
     }
   }
 
