@@ -1,5 +1,5 @@
 output "load_balancer_ip" {
-  value = module.load_balancer[0].external_ip
+  value = var.create_load_balancer ? module.load_balancer[0].external_ip : null
 }
 
 output "nginx_reverse_proxy_url" {

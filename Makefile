@@ -71,8 +71,11 @@ devops/terraform/output: devops/terraform/select/$(WORKSPACE)
 	terraform -chdir=terraform output
 
 devops/terraform/redeploy: devops/terraform/select/$(WORKSPACE)
-	terraform -chdir=terraform destroy -target=google_cloud_run_service.default -auto-approve
-	make devops/terraform/apply
+	terraform -chdir=terraform apply \
+	-replace=google_cloud_run_service.default \
+	-target=google_cloud_run_service.default \
+	-target=google_cloud_run_service_iam_policy.noauth \
+	-target=google_cloud_run_domain_mapping.default
 
 # https://github.com/terraform-google-modules/terraform-google-lb-http/blob/v6.3.0/docs/upgrading-v2.0.0-v3.0.0.md#dealing-with-dependencies
 devops/terraform/destroy/serverless_neg: devops/terraform/select/$(WORKSPACE)
