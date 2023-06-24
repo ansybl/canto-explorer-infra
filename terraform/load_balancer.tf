@@ -16,7 +16,7 @@ module "load_balancer" {
   project        = var.project
   name           = "${local.service_name}-load-balancer-${local.environment}"
   create_address = false
-  address        = google_compute_global_address.load_balancer_address.address
+  address        = google_compute_global_address.load_balancer_address[0].address
   labels = {
     environment  = local.environment
     service_name = local.service_name
